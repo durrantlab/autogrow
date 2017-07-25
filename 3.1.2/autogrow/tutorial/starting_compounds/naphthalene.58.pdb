@@ -1,0 +1,24 @@
+REMARK halide to azide
+REMARK SOURCE FILES: ../6.pdbs_less_than_250/ZINC00345455.ZINC_results-all.naphthalene.Br.pdb
+ATOM      1  C   LIG            -2.965  -0.566   0.124                       C
+ATOM      2  C   LIG            -2.953   0.842   0.108                       C
+ATOM      3  C   LIG            -1.728   1.538   0.093                       C
+ATOM      4  C   LIG            -0.511   0.825   0.093                       C
+ATOM      5  C   LIG             0.718   1.515   0.077                       C
+ATOM      6  C   LIG             1.933   0.801   0.077                       C
+ATOM      7  C   LIG             1.922  -0.612   0.093                       C
+ATOM      8  C   LIG             0.694  -1.304   0.109                       C
+ATOM      9  C   LIG            -0.523  -0.592   0.109                       C
+ATOM     10  C   LIG            -1.752  -1.283   0.124                       C
+ATOM     11  N   LIG             3.116  -1.333   0.093                       N
+ATOM     12  H   LIG            -3.905  -1.097   0.136                       H
+ATOM     13  H   LIG            -3.884   1.390   0.108                       H
+ATOM     14  H   LIG            -1.728   2.618   0.081                       H
+ATOM     15  H   LIG             0.736   2.595   0.065                       H
+ATOM     16  H   LIG             0.686  -2.385   0.121                       H
+ATOM     17  H   LIG            -1.772  -2.363   0.136                       H
+ATOM     18  H   LIG             4.011  -0.864   0.082                       H
+ATOM     19  H   LIG             3.127  -2.343   0.104                       H
+ATOM     20  N2  LIG             3.168   1.530   0.040                       N
+ATOM     21  N3  LIG             3.708   1.722  -0.991                       N
+ATOM     22  N4  LIG             4.248   1.913  -2.020                       N

@@ -1,0 +1,28 @@
+REMARK halide to azide
+REMARK SOURCE FILES: ../6.pdbs_less_than_250/ZINC00337334.ZINC_results-all.naphthalene.Cl.pdb
+ATOM      1  C   LIG             1.385   3.383   0.040                       C
+ATOM      2  C   LIG             2.608   2.681   0.086                       C
+ATOM      3  C   LIG             2.572   1.278   0.119                       C
+ATOM      4  C   LIG             1.350   0.603   0.108                       C
+ATOM      5  C   LIG             0.108   1.269   0.065                       C
+ATOM      6  C   LIG             0.155   2.685   0.029                       C
+ATOM      7  C   LIG            -1.061   0.462   0.056                       C
+ATOM      8  C   LIG            -0.966  -0.960   0.099                       C
+ATOM      9  C   LIG             0.304  -1.583   0.132                       C
+ATOM     10  C   LIG             1.458  -0.786   0.139                       C
+ATOM     11  C   LIG             2.931  -1.124   0.177                       C
+ATOM     12  C   LIG             3.663   0.231   0.167                       C
+ATOM     13  N   LIG            -2.164  -1.814   0.103                       N
+ATOM     14  O   LIG            -3.049  -1.572   0.917                       O
+ATOM     15  O   LIG            -2.194  -2.750  -0.688                       O
+ATOM     16  H   LIG             1.389   4.463   0.014                       H
+ATOM     17  H   LIG             3.550   3.211   0.094                       H
+ATOM     18  H   LIG            -0.761   3.257  -0.006                       H
+ATOM     19  H   LIG             0.389  -2.660   0.160                       H
+ATOM     20  H   LIG             3.161  -1.695   1.077                       H
+ATOM     21  H   LIG             3.198  -1.728  -0.691                       H
+ATOM     22  H   LIG             4.313   0.328  -0.703                       H
+ATOM     23  H   LIG             4.269   0.364   1.064                       H
+ATOM     24  N2  LIG            -2.338   1.108  -0.050                       N
+ATOM     25  N3  LIG            -2.622   1.692  -1.034                       N
+ATOM     26  N4  LIG            -2.906   2.277  -2.016                       N
