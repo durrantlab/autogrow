@@ -5662,7 +5662,7 @@ class AutoClickChem:
         """Initialize an AutoClickChem object."""
         
         # always check to see if intermediate directory exists. If not, make it and populate it with files.
-        if not os.path.exists("./intermediates"):
+        if os.path.exists("./intermediates")==False:
             os.mkdir("./intermediates")
             self.__make_intermediates()
 
