@@ -1,4 +1,4 @@
-"""AutoGrow 3.1.2 is free software: you can redistribute it and/or modify
+"""AutoGrow 3.1.3 is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -47,11 +47,11 @@ def define_defaults(): # this function is first to make it easy for the user to 
 	
 
 	############################################################# OPTIONAL FILE-LOCATION VARIABLES ################################################################
-	#					     (RECOMMEND SETTING TO "" SO AUTOGROW CAN AUTOLOCATE THESE FILES)												 #
+	#						 (RECOMMEND SETTING TO "" SO AUTOGROW CAN AUTOLOCATE THESE FILES)												 #
 	###############################################################################################################################################################
 	vars['babel_executable'] = "" 	   # vars['babel_executable'] = "/home/myname/openbabel-2.2.0/bin/babel"
 	vars['obprop_executable'] = "" 	   # vars['obprop_executable'] = "/home/myname/openbabel-2.2.0/bin/obprop"
-	vars['prepare_ligand4.py'] = ""    # vars['prepare_ligand4.py'] = "/home/myname/MGLTools-1.5.4/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_ligand4.py"
+	vars['prepare_ligand4.py'] = ""	# vars['prepare_ligand4.py'] = "/home/myname/MGLTools-1.5.4/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_ligand4.py"
 	vars['prepare_receptor4.py'] = ""  # vars['prepare_receptor4.py'] = "/home/myname/MGLTools-1.5.4/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_receptor4.py"
 	vars['mgl_python'] = "" 	   # vars['mgl_python'] = "/home/myname/MGLTools-1.5.4/bin/pythonsh"
 	###############################################################################################################################################################
@@ -402,7 +402,7 @@ class run_autoclick_multithread(general_task):
 
 		global vars
 
-		check_time_limit_reached() # has the program been running too long? If so, stop the program.
+		# check_time_limit_reached() # has the program been running too long? If so, stop the program.
 
 		# pick a ligand
 		ligand = random.choice(variables_to_pass['ligands'])
@@ -459,41 +459,44 @@ class run_ligmerge_multithread(general_task):
 		ligands = variables_to_pass['ligands']
 		directory = variables_to_pass['directory']
 		
-		check_time_limit_reached()
+		# check_time_limit_reached()
 
 		# pick two ligands
 		count2 = 0
-		while True:
+		control_var = True
+		while control_var == True:
 			count2 = count2 + 1
 			ligand1 = random.choice(ligands)
 			ligand2 = random.choice(ligands)
 			if ligand1 != ligand2: break # you've got different names
 			if count2 > 10000:
 				log("ERROR: I've tried 10,000 times to identify two unique ligands to serve as \"parents\" in the production of a crossover ligand. Aborting program...")
-				sys.exit(0)
-			
-		pdb1 = Molecule2()
-		pdb1.load_pdb(ligand1)
-		pdb2 = Molecule2()
-		pdb2.load_pdb(ligand2)
+				control_var = False
+				break
 
-		aLigMerge = LigMerge()
-		merged,message = aLigMerge.main(pdb1, pdb2, 'false', 'false', 'false', 20) # so if it doesn't generate a hybrid molecule in 20 seconds, abort.
+		if control_var == True:
+			pdb1 = Molecule2()
+			pdb1.load_pdb(ligand1)
+			pdb2 = Molecule2()
+			pdb2.load_pdb(ligand2)
 
-		if merged is not None:
-			if len(merged) > 0: merged = merged[0]
-			else: merged is None
+			aLigMerge = LigMerge()
+			merged,message = aLigMerge.main(pdb1, pdb2, 'false', 'false', 'false', 20) # so if it doesn't generate a hybrid molecule in 20 seconds, abort.
 
-		if merged is not None: 
-			newindex = random.randint(0,1000000)
-			filename = directory + str(newindex) + ".crossover.pdb" 
+			if merged is not None:
+				if len(merged) > 0: merged = merged[0]
+				else: merged is None
 
-			try:
-				merged.save_pdb2(filename, ['Source Files:',ligand1, ligand2])
-			except AttributeError:
-				nthing = ""
+			if merged is not None: 
+				newindex = random.randint(0,1000000)
+				filename = directory + str(newindex) + ".crossover.pdb" 
 
-			log("Making crossover: " + os.path.basename(ligand1) + " + " + os.path.basename(ligand2) + " => " + os.path.basename(filename))
+				try:
+					merged.save_pdb2(filename, ['Source Files:',ligand1, ligand2])
+				except AttributeError:
+					nthing = ""
+
+				log("Making crossover: " + os.path.basename(ligand1) + " + " + os.path.basename(ligand2) + " => " + os.path.basename(filename))
 
 class druglike_multithread(general_task):
 	"""Evaluate druglike properties of moleules on a single processor"""
@@ -507,7 +510,7 @@ class druglike_multithread(general_task):
 
 		"""
 
-		check_time_limit_reached()
+		# check_time_limit_reached()
 
 		if check_drug_likeness(filename) == False:
 			log("Not druglike: deleting ligand " + filename)
@@ -1866,9 +1869,9 @@ def check_drug_likeness(pdb_filename):
 def program_info():
 	"""Get the program version number, etc."""
 
-	program_output = "\nAutoGrow Version 3.1.2\n"
+	program_output = "\nAutoGrow Version 3.1.3\n"
 	program_output = program_output + "==================\n"
-	program_output = program_output + "If you use AutoGrow 3.1.2 in your research, please cite the following reference:\n"
+	program_output = program_output + "If you use AutoGrow 3.1.3 in your research, please cite the following reference:\n"
 	program_output = program_output + "Durrant, J. D., ....\n\n"
 	
 	return program_output
@@ -1923,7 +1926,7 @@ def help_output():
 	underline('INTRODUCTION')
 	
 	wrapper = textwrap.TextWrapper(140)
-	log(wrapper.fill('AutoGrow 3.1.2 is a genetic algorithm that attempts to automate the small-molecule inhibitor identification/optimization process. Though no substitute for the medicinal chemist, AutoGrow 3.1.2 can produce chemically feasible drug-like molecules that may supplement the chemist\'s efforts. Version 3 is significantly improved over previous versions. AutoGrow 1.0 and 2.0 simply replace selected hydrogen atoms with molecular fragments, often leading to molecules that are not easy to synthesize; AutoGrow 3 adds fragments using the AutoClickChem algorithm, thus mimicking the many reactions of click chemistry in silico and producing molecules that can actually be synthesized. Additionally, AutoGrow 1.0 and 2.0 add fragments without regard for the drug-like properties of the growing ligands, often leading to compounds that are not necessarily lead like; AutoGrow 3, in contrast, assesses the generated ligands for drug-like properties at each generation, discarding any compounds that do not meet the appropriate criteria.') + "\n")
+	log(wrapper.fill('AutoGrow 3.1.3 is a genetic algorithm that attempts to automate the small-molecule inhibitor identification/optimization process. Though no substitute for the medicinal chemist, AutoGrow 3.1.3 can produce chemically feasible drug-like molecules that may supplement the chemist\'s efforts. Version 3 is significantly improved over previous versions. AutoGrow 1.0 and 2.0 simply replace selected hydrogen atoms with molecular fragments, often leading to molecules that are not easy to synthesize; AutoGrow 3 adds fragments using the AutoClickChem algorithm, thus mimicking the many reactions of click chemistry in silico and producing molecules that can actually be synthesized. Additionally, AutoGrow 1.0 and 2.0 add fragments without regard for the drug-like properties of the growing ligands, often leading to compounds that are not necessarily lead like; AutoGrow 3, in contrast, assesses the generated ligands for drug-like properties at each generation, discarding any compounds that do not meet the appropriate criteria.') + "\n")
 	
 	underline('COMMAND LINE PARAMETERS')
 
@@ -2250,7 +2253,7 @@ def make_mutants(directory):
 
 		while len(glob.glob(directory + "*.mutant.pdb")) < vars['number_of_mutants_current_generation']: # keep generating new mutants until you've passed the allowable level
 			multi_threading(range(100), run_autoclick_multithread, vars_to_pass) # so, performing 100 ligands at a time
-
+			check_time_limit_reached()
 		# note that this is going to overshoot, and generate too many ligands. These will be deleted later
 
 def make_crossovers(directory):
@@ -2275,7 +2278,7 @@ def make_crossovers(directory):
 		while len(glob.glob(directory + "*.crossover.pdb")) < vars['number_of_crossovers_current_generation']: # keep generating new crossovers until you've passed the allowable level
 			multi_threading(range(100), run_ligmerge_multithread, vars_to_pass) # so, performing 100 ligands at a time
 			# this is a lousy solution!!! Need to pass variables between threads!!! ******
-			
+			check_time_limit_reached()
 		# note that this is going to overshoot, and generate too many ligands. These will be deleted later
 
 ##########################################
@@ -2948,7 +2951,7 @@ class run_main():
 		top_compounds = []
 		
 		# run the algorithm for the correct number of generations
-		generation_num = 0
+		generation_num = 1
 		
 		# keep track of the time each generation takes
 		global start_time_current_generation
@@ -2960,17 +2963,23 @@ class run_main():
 		log("Converting receptor pdb files to pdbqt format if needed...")
 		convert_receptor_pdb_files_to_pdbqt()
 		
+		current_generation_dir = get_current_generation_directory()
+		generation_num = current_generation_dir.split(os.sep)[-2]
+		generation_num = int(generation_num.split("generation")[-1])
+
+
 		while generation_num < vars['num_generations']:
-			
+			print("Starting generation number: ", generation_num)
 			# first, identify the directory of the current generation, set up generation-sepcific parameters
-			
 			current_generation_dir = get_current_generation_directory()
+
+			if "generation1" + os.sep in current_generation_dir: 
+				vars['number_of_mutants_current_generation'] = vars['number_of_mutants_first_generation']
+				vars['number_of_crossovers_current_generation'] = vars['number_of_crossovers_first_generation']
+			else: 
+				vars['number_of_mutants_current_generation'] = vars['number_of_mutants']
+				vars['number_of_crossovers_current_generation'] = vars['number_of_crossovers']
 			
-			if "generation1" + os.sep in current_generation_dir: vars['number_of_crossovers_current_generation'] = vars['number_of_crossovers_first_generation']
-			else: vars['number_of_crossovers_current_generation'] = vars['number_of_crossovers']
-			
-			if "generation1" + os.sep in current_generation_dir: vars['number_of_mutants_current_generation'] = vars['number_of_mutants_first_generation']
-			else: vars['number_of_mutants_current_generation'] = vars['number_of_mutants']
 			
 			thedirinfo = "\n\nThe current generational directory is " + current_generation_dir
 			log(thedirinfo)
@@ -3034,6 +3043,8 @@ class run_main():
 		
 				vars['directory_of_source_compounds'] = current_generation_dir + "best_ligands" + os.sep
 				
+				generation_num = generation_num + 1
+			else:
 				generation_num = generation_num + 1
 		
 		log_text_file.close()
